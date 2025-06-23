@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start a Project – Samako Cortex</title>
+  <script>
+    async function handleSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const data = new FormData(form);
+      const payload = Object.fromEntries(data.entries());
+
+      // Send data to Apps Script Webhook
+      await fetch("YOUR_GOOGLE_APPS_SCRIPT_WEBHOOK_URL", {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(payload),
+      });
+
+      // Redirect to WhatsApp
+      const name = payload.name.split(" ")[0];
+      window.location.href =
+        `https://wa.me/2348100653076?text=Hi%20Samako%2C%20I%20just%20submitted%20a%20project%20request.%20My%20name%20is%20${name}.`;
+    }
+  </script>
+  <style>
+    body { font-family: sans-serif; background: #f5f7fa; padding: 2rem; }
+    form { background: white; padding: 2rem; border-radius: 1rem; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    label { display: block; margin-top: 1rem; font-weight: bold; }
+    input, textarea, select { width: 100%; padding: 0.75rem; margin-top: 0.25rem; border: 1px solid #ccc; border-radius: 0.5rem; }
+    button { margin-top: 2rem; background: #111827; color: white; padding: 1rem; border: none; border-radius: 0.5rem; cursor: pointer; width: 100%; font-size: 1rem; }
+    button:hover { background: #1f2937; }
+  </style>
+</head>
+<body>
+  <form onsubmit="handleSubmit(event)">
+    <h2>Start a Project with Samako Cortex</h2>
+
+    <label for="name">Full Name</label>
+    <input type="text" name="name" required />
+
+    <label for="whatsapp">WhatsApp Number</label>
+    <input type="text" name="whatsapp" placeholder="234XXXXXXXXXX" required />
+
+    <label for="email">Email (optional)</label>
+    <input type="email" name="email" />
+
+    <label for="service">Service Type</label>
+    <select name="service" required>
+      <option value="Branding">Branding</option>
+      <option value="Web Design">Web Design</option>
+      <option value="Logo Design">Logo Design</option>
+      <option value="Automation">Automation</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="summary">Project Summary</label>
+    <textarea name="summary" rows="4" required></textarea>
+
+    <label for="urgency">Urgency</label>
+    <select name="urgency">
+      <option value="Not urgent">Not urgent</option>
+      <option value="This week">This week</option>
+      <option value="ASAP">ASAP</option>
+    </select>
+
+    <label>
+      <input type="checkbox" name="consent" required />
+      I agree to be contacted by Samako Cortex
+    </label>
+
+    <button type="submit">Send to Cortex</button>
+  </form>
+</body>
+</html>
